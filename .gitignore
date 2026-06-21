@@ -6,7 +6,7 @@ venv/
 .DS_Store
 .env
 data/raw_drhp/
-data/ipo_dataset.csv
+# data/ipo_dataset.csv — included for deployment
 # artifacts/*.joblib  — included so Render can load the model
 artifacts/*.npz
 artifacts/*.npy
