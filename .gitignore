@@ -7,7 +7,7 @@ venv/
 .env
 data/raw_drhp/
 data/ipo_dataset.csv
-artifacts/*.joblib
+# artifacts/*.joblib  — included so Render can load the model
 artifacts/*.npz
 artifacts/*.npy
 artifacts/*.csv
