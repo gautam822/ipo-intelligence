@@ -1,0 +1,7 @@
+{
+  "train_mean_reward_last100": 0.1932,
+  "test_mean_reward_rl": 0.0524,
+  "test_mean_reward_xgb_only": 0.0524,
+  "rl_improvement_pct": 0.1,
+  "test_invest_calls": 56
+}
