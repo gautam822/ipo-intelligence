@@ -1,41 +1,37 @@
 import { motion } from "framer-motion"
 
 function colorFor(score) {
-  if (score >= 6.5) return { bar: "#059669", bg: "#ECFDF5", text: "#059669" }
-  if (score >= 4)   return { bar: "#D97706", bg: "#FFFBEB", text: "#B45309" }
-  return                   { bar: "#DC2626", bg: "#FEF2F2", text: "#DC2626" }
+  if (score >= 6.5) return { bar: "#34D399", text: "#34D399" }
+  if (score >= 4)   return { bar: "#FBBF24", text: "#FBBF24" }
+  return               { bar: "#FB7185", text: "#FB7185" }
 }
 
 export default function PillarBars({ pillars = {} }) {
+  const entries = Object.entries(pillars)
   return (
-    <div className="flex flex-col divide-y divide-border">
-      {Object.entries(pillars).map(([name, score], i) => {
-        const cfg = colorFor(score)
+    <div className="flex flex-col gap-3">
+      {entries.map(([name, score], i) => {
+        const { bar, text } = colorFor(score)
+        const pct = (score / 10) * 100
         return (
-          <motion.div
-            key={name}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.07, duration: 0.35 }}
-            className="flex items-center gap-3 py-3"
-          >
-            <span className="text-[13px] text-ink2 font-medium w-[160px] flex-shrink-0">{name}</span>
-            <div className="flex-1 h-2 bg-surface2 rounded-full overflow-hidden border border-border">
-              <motion.div
-                className="h-full rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${score * 10}%` }}
-                transition={{ delay: i * 0.07 + 0.15, duration: 0.7, ease: "easeOut" }}
-                style={{ background: cfg.bar }}
-              />
+          <div key={name}>
+            <div className="flex justify-between items-center mb-1.5">
+              <span className="text-xs font-medium text-ink2">{name}</span>
+              <span className="text-xs font-mono font-semibold" style={{ color: text }}>{score.toFixed(1)}</span>
             </div>
-            <span
-              className="tabular text-xs font-bold w-8 text-right flex-shrink-0"
-              style={{ color: cfg.text }}
-            >
-              {score.toFixed(1)}
-            </span>
-          </motion.div>
+            <div className="h-1.5 rounded-full bg-[rgba(255,255,255,0.06)] overflow-hidden">
+              <motion.div
+                className="h-full rounded-full origin-left"
+                style={{ background: `linear-gradient(90deg, ${bar}80, ${bar})` }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: i * 0.06, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                custom={pct}
+              >
+                <div style={{ width: `${pct}%`, height: "100%", borderRadius: "inherit" }} />
+              </motion.div>
+            </div>
+          </div>
         )
       })}
     </div>

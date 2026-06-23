@@ -1,31 +1,38 @@
-const COLORS = { INVEST: "#059669", NEUTRAL: "#D97706", AVOID: "#DC2626" }
-const BG     = { INVEST: "#ECFDF5", NEUTRAL: "#FFFBEB", AVOID: "#FEF2F2" }
+const COLORS = {
+  INVEST:  { text: "#34D399", bg: "rgba(52,211,153,0.1)",  dot: "#34D399" },
+  NEUTRAL: { text: "#FBBF24", bg: "rgba(251,191,36,0.1)",  dot: "#FBBF24" },
+  AVOID:   { text: "#FB7185", bg: "rgba(251,113,133,0.1)", dot: "#FB7185" },
+}
 
 export default function Ticker({ items = [] }) {
   if (!items.length) return null
-  const loop = [...items, ...items]
+  const doubled = [...items, ...items]
 
   return (
-    <div className="relative w-full overflow-hidden bg-surface border-b border-border py-2">
-      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none" />
-      <div className="flex w-max animate-ticker gap-8 whitespace-nowrap">
-        {loop.map((it, i) => (
-          <span key={i} className="flex items-center gap-2 text-sm">
+    <div className="w-full overflow-hidden border-b border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] py-2 backdrop-blur-sm">
+      <div className="flex animate-ticker whitespace-nowrap will-change-transform" style={{ width: "max-content" }}>
+        {doubled.map((item, i) => {
+          const cfg = COLORS[item.verdict] ?? COLORS.NEUTRAL
+          return (
             <span
-              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-semibold text-xs"
-              style={{
-                background: BG[it.verdict],
-                color: COLORS[it.verdict],
-              }}
+              key={i}
+              className="inline-flex items-center gap-2 px-6 text-xs font-mono font-medium"
             >
-              <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: COLORS[it.verdict] }} />
-              {it.verdict}
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: cfg.dot }} />
+              <span className="text-ink2 uppercase tracking-wide">{item.company}</span>
+              <span
+                className="px-2 py-0.5 rounded-md font-bold text-[10px] tracking-wider"
+                style={{ color: cfg.text, background: cfg.bg }}
+              >
+                {item.verdict}
+              </span>
+              <span className="font-mono" style={{ color: cfg.text }}>
+                {item.confidence?.toFixed(0)}%
+              </span>
+              <span className="text-[rgba(255,255,255,0.1)] ml-2">·</span>
             </span>
-            <span className="text-ink2 font-medium">{it.company}</span>
-            <span className="text-muted tabular text-xs">{it.confidence?.toFixed(0)}%</span>
-          </span>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
