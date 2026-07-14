@@ -1,0 +1,73 @@
+// Open / recent mainboard IPOs with live-ish snapshot data and allotment status.
+// Static seed — update this file (or wire to the backend scraper) to refresh.
+// status: "open" | "closed" | "listed"
+// allotment: "awaited" | "out" | null (null while still open for bidding)
+
+export const IPO_UPDATED = "2026-07-14"
+
+export const OPEN_IPOS = [
+  {
+    id: "sbi-funds-mgmt",
+    company: "SBI Funds Management",
+    open: "2026-07-14",
+    close: "2026-07-16",
+    listing: "2026-07-21",
+    priceBand: "₹549 – ₹574",
+    lotSize: 26,
+    issueSize: "₹11,692.9 Cr",
+    type: "Offer for Sale",
+    gmpPct: 0.172,
+    status: "open",
+    allotment: null,
+    subscription: { qib: null, nii: null, retail: null },
+    note: "India's largest AMC listing — one of 2026's marquee mainboard IPOs.",
+  },
+  {
+    id: "turtlemint-fintech",
+    company: "Turtlemint Fintech Solutions",
+    open: "2026-07-09",
+    close: "2026-07-11",
+    listing: "2026-07-16",
+    priceBand: "₹108 – ₹114",
+    lotSize: 130,
+    issueSize: "₹—",
+    type: "Fresh + OFS",
+    gmpPct: 0.06,
+    status: "closed",
+    allotment: "awaited",
+    subscription: { qib: 4.2, nii: 6.8, retail: 2.1 },
+    note: "Insurtech platform. Subscription window closed; allotment being finalised.",
+  },
+  {
+    id: "laser-power-infra",
+    company: "Laser Power & Infra",
+    open: "2026-07-10",
+    close: "2026-07-14",
+    listing: "2026-07-17",
+    priceBand: "₹— (mainboard)",
+    lotSize: null,
+    issueSize: "₹—",
+    type: "Fresh Issue",
+    gmpPct: 0.18,
+    status: "open",
+    allotment: null,
+    subscription: { qib: null, nii: null, retail: null },
+    note: "Strong grey-market interest heading into the close.",
+  },
+  {
+    id: "strongtech-demo",
+    company: "StrongTech Industries",
+    open: "2026-07-07",
+    close: "2026-07-09",
+    listing: "2026-07-14",
+    priceBand: "₹92 – ₹98",
+    lotSize: 150,
+    issueSize: "₹—",
+    type: "Fresh + OFS",
+    gmpPct: 0.22,
+    status: "listed",
+    allotment: "out",
+    subscription: { qib: 18.3, nii: 42.1, retail: 9.6 },
+    note: "Listed today. Allotment out; heavy oversubscription across categories.",
+  },
+]

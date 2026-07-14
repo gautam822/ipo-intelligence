@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #0A0B0D;
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #E9E7E2;
+  overflow-x: hidden;
+}
+
+/* ── scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+
+/* ── selection: bond gold ── */
+::selection { background: rgba(201,169,97,0.28); color: #F5F3EE; }
+
+/* ── focus ── */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid rgba(201,169,97,0.7);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── numerals ── */
+.tabular, .num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ═══════════ GROUND LAYERS ═══════════ */
+
+/* Fine graph-paper hairlines, faded toward the fold */
+.graph-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.5) 45%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.5) 45%, transparent 78%);
+}
+
+/* Film grain */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Single restrained warm glow behind the hero */
+.hero-halo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 42% at 50% -6%, rgba(201,169,97,0.09) 0%, transparent 65%);
+}
+
+/* ═══════════ RULES & TYPE HELPERS ═══════════ */
+
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+}
+
+.eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #66635C;
+}
+
+.gold-tick {
+  display: inline-block;
+  width: 3px;
+  height: 10px;
+  border-radius: 1px;
+  background: #C9A961;
+}
+
+/* ═══════════ COMPONENT PRIMITIVES ═══════════ */
+
+/* Verdict badges (Listings et al.) */
+.badge-invest  { background: rgba(64,217,147,0.09);  color: #40D993; border: 1px solid rgba(64,217,147,0.28); }
+.badge-neutral { background: rgba(229,184,75,0.09);  color: #E5B84B; border: 1px solid rgba(229,184,75,0.28); }
+.badge-avoid   { background: rgba(242,101,126,0.09); color: #F2657E; border: 1px solid rgba(242,101,126,0.28); }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+/* Corner ticks — certificate registration marks */
+.corner-ticks::before,
+.corner-ticks::after,
+.corner-ticks > .ct::before,
+.corner-ticks > .ct::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--tick, rgba(255,255,255,0.22));
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-ticks::before        { top: 10px;    left: 10px;  border-width: 1px 0 0 1px; }
+.corner-ticks::after         { top: 10px;    right: 10px; border-width: 1px 1px 0 0; }
+.corner-ticks > .ct::before  { bottom: 10px; left: 10px;  border-width: 0 0 1px 1px; }
+.corner-ticks > .ct::after   { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+/* Tape pause on hover */
+.tape-track:hover .animate-tape { animation-play-state: paused; }
+
+/* Dotted leader between a label and its value (report style) */
+.leader {
+  flex: 1;
+  border-bottom: 1px dotted rgba(255,255,255,0.14);
+  transform: translateY(-4px);
+  margin: 0 10px;
+  min-width: 16px;
+}
+
+/* ═══════════ MOTION SAFETY ═══════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════ KEYFRAMES (mirrors tailwind config for raw-CSS use) ═══════════ */
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+/* Gold CTA sheen: a light band sweeps across on hover */
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.sheen:hover::after { left: 125%; transition: left 0.75s ease; }
+@media (prefers-reduced-motion: reduce) { .sheen::after { display: none; } }
+@keyframes tape    { 0% { transform: translateX(0); }    100% { transform: translateX(-50%); } }

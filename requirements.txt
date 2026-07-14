@@ -1,0 +1,17 @@
+pandas>=2.0
+numpy>=1.26
+scikit-learn>=1.6
+xgboost>=2.0
+shap>=0.45
+joblib
+reportlab>=4.0
+plotly>=5.20
+streamlit>=1.35
+fastapi>=0.110
+uvicorn>=0.29
+requests
+beautifulsoup4
+pdfplumber
+anthropic           # optional: LLM DRHP analyser
+gymnasium           # optional: SB3 PPO scale-up
+# stable-baselines3 # optional: deep RL upgrade
